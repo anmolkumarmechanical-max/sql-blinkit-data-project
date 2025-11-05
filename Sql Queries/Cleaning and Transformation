@@ -1,0 +1,19 @@
+
+
+
+select * from Blinkit_data
+select count(*) from Blinkit_data
+
+update Blinkit_data 
+set Item_Fat_Content = 
+case 
+when Item_Fat_Content in ('LF', 'low fat') then 'Low Fat'
+when Item_Fat_Content = 'reg' then 'Regular'
+else Item_Fat_Content
+end
+
+select distinct(Item_Fat_Content) from Blinkit_data  
+
+
+select cast(sum(Total_Sales)/1000000 as decimal(10,2)) as Total_Sales_Millions
+from Blinkit_data
