@@ -1,0 +1,58 @@
+***The Queries are writtten for the year 2020***
+
+***Total Sales by Fat Content***
+
+Select Item_Fat_content,
+       cast(sum(Total_sales)/1000 as decimal(10,2)) as Total_Sales_Thousands,
+       Cast(avg(Total_Sales) as decimal(10,1)) as avg_sales,
+       count(*) as No_Of_Items,
+       cast(avg(rating) as decimal(10,2)) as Avg_Rating
+from Blinkit_data
+where Outlet_Establishment_Year = 2020
+group by Item_Fat_Content
+Order by Total_Sales_Thousands desc
+
+
+***Total Sales by Item Type***
+
+select Item_Type,
+       cast(sum(Total_sales)/1000 as decimal(10,2)) as Total_Sales_Thousands,
+       Cast(avg(Total_Sales) as decimal(10,1)) as avg_sales,
+       count(*) as No_Of_Items,
+       cast(avg(rating) as decimal(10,2)) as Avg_Rating
+from Blinkit_data
+where Outlet_Establishment_Year = 2020
+group by Item_Type
+Order by Total_Sales_Thousands desc
+
+
+***Fat Content by Outlet for Total Sales***
+
+Select Outlet_Location_Type,
+       isnull([Low_Fat],0) as Low_Fat,
+       isnull([Regular],0) as Regular
+from
+(
+  Select Outlet_Location_Type, Item_Fat_Content,
+         cast(sum(Total_Sales) as decimal(10,2)) as Total_Sales
+  From Blinkit_data
+  Group by Outlet_Location_Type, Item_Fat_Content
+) As SourceTable
+Pivot
+(
+  Sum(Total_Sales)
+  for Item_Fat_Content in ([Low Fat], [Regular])
+) As Pivottable
+order by Outlet_Location_Type;
+
+
+***Total Sales by Outlet Establishment***
+select Outlet_Establishment_Year,
+       cast(sum(Total_sales) as decimal(10,2)) as Total_Sales,
+       cast(avg(Total_Sales) as decimal(10,1)) as avg_sales,
+       count(*) as No_Of_Items,
+       cast(avg(rating) as decimal(10,2)) as Avg_Rating
+from Blinkit_data
+group by Outlet_Establishment_Year
+Order by Outlet_Establishment_Year Asc
+
