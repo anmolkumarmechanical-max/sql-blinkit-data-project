@@ -1,0 +1,20 @@
+*** Queries For KPI Requirements***
+
+***Total Sales***
+
+
+select cast(sum(Total_Sales)/1000000 as decimal(10,2)) as Total_Sales_Millions
+from Blinkit_data 
+
+
+***Average Sales***
+select cast(avg(Total_Sales) as decimal(10,1)) as avg_sales from Blinkit_data
+
+
+***Number of Items***
+select count(*) as No_Of_Items from Blinkit_data
+
+
+***Average Rating***
+select cast(avg(rating) as decimal(10,2)) as Avg_Rating from Blinkit_data
+
